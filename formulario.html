@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espaço Elo | Problemas Urbanos</title>
+  <link rel="stylesheet" href="formulario.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">📍</div>
+      <div>
+        <h2>Espaço Elo</h2>
+        <span>Inclusão Digital</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#inicio">⌂ Início</a>
+      <a href="#registros">▤ Meus Registros</a>
+      <a href="#sobre">ⓘ Sobre</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+
+    <section class="hero">
+      <div class="hero-texto">
+        <span class="tag">PARTICIPE DA MUDANÇA</span>
+        <h1>Informe um<br>problema urbano</h1>
+        <p>Ajude a construir uma cidade melhor!</p>
+        <p>Cadastre aqui problemas da sua região.</p>
+      </div>
+
+      <div class="hero-ilustracao" aria-hidden="true">
+        <div class="sol"></div>
+        <div class="predios">
+          <span></span><span></span><span></span>
+          <span></span><span></span>
+        </div>
+        <div class="arvores">🌳 🌳 🌳</div>
+        <div class="pino">📍</div>
+      </div>
+    </section>
+
+    <section class="formulario-card">
+      <div class="titulo-formulario">
+        <div class="icone-form">📢</div>
+        <div>
+          <h2>Novo Registro</h2>
+          <p>Preencha os campos abaixo para enviar sua sugestão.</p>
+        </div>
+      </div>
+
+      <form id="formProblema">
+
+        <div class="grid-campos">
+          <div class="campo">
+            <label for="categoria">Tipo de problema <b>*</b></label>
+            <select id="categoria" required>
+              <option value="">Selecione uma categoria</option>
+              <option>Buraco na rua</option>
+              <option>Iluminação pública</option>
+              <option>Limpeza urbana</option>
+              <option>Calçadas e acessibilidade</option>
+              <option>Praças e espaços públicos</option>
+              <option>Alagamentos</option>
+              <option>Sinalização de trânsito</option>
+              <option>Outros</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="nome">Nome do problema <b>*</b></label>
+            <input type="text" id="nome"
+              placeholder="Ex: Buraco na rua" maxlength="90" required>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="descricao">Descrição <b>*</b></label>
+          <textarea id="descricao" maxlength="500"
+            placeholder="Conte um pouco mais sobre o problema..."
+            required></textarea>
+          <div class="contador" id="contador">0/500</div>
+        </div>
+
+        <div class="grid-campos">
+          <div class="campo">
+            <label for="localizacao">Localização aproximada <b>*</b></label>
+            <input type="text" id="localizacao"
+              placeholder="Ex: Rua das Flores, próximo à praça"
+              maxlength="140" required>
+          </div>
+
+          <div class="campo">
+            <label for="referencia">Ponto de referência</label>
+            <input type="text" id="referencia"
+              placeholder="Ex: Igreja, escola, etc."
+              maxlength="100">
+          </div>
+        </div>
+
+        <div class="dica">
+          💡
+          <span>Seja específico ao descrever o local. Isso ajuda a equipe a encontrar e resolver o problema.</span>
+        </div>
+
+        <div class="botoes">
+          <button type="submit" class="btn-enviar">
+            ➤ Enviar Registro
+          </button>
+
+          <button type="reset" class="btn-limpar">
+            ▤ Limpar Formulário
+          </button>
+        </div>
+
+        <p class="aviso">
+          O registro será salvo localmente neste navegador.
+          Nenhum órgão público será notificado automaticamente.
+        </p>
+
+        <div id="mensagem" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="historico" id="registros">
+      <div class="historico-topo">
+        <div class="historico-titulo">
+          <span class="icone-historico">◷</span>
+          <h2>Últimos Registros</h2>
+        </div>
+        <span class="total" id="total">0 registros</span>
+      </div>
+
+      <div id="listaRegistros">
+        <p class="vazio">Nenhum registro cadastrado ainda.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="sobre">
+    <p>Espaço Elo — Juntos por uma cidade mais conectada e inclusiva! 💚</p>
+  </footer>
+
+</body>
+</html>
