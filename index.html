@@ -1,94 +1,252 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#123b65">
-<title>Minha Nova Londrina · Início</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#142D4E">
+
+  <title>Minha Nova Londrina | Gestão Urbana</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
+
 <body>
 
 <header class="topo">
   <div class="topo-in">
-    <div class="logo" aria-hidden="true">NL</div>
-    <div class="marca">
-      <strong>Minha Nova Londrina</strong>
-      <span>Gestão urbana</span>
-    </div>
-    <a class="perfil" href="#" aria-label="Meu perfil">👤</a>
+
+    <a href="index.html" class="identidade">
+      <div class="logo">NL</div>
+
+      <div class="marca">
+        <strong>Minha Nova Londrina</strong>
+        <span>PLATAFORMA DE GESTÃO URBANA</span>
+      </div>
+    </a>
+
+    <a class="perfil" href="#" aria-label="Meu perfil">
+      <span>👤</span>
+    </a>
+
   </div>
 </header>
 
 <main>
 
-  <!-- DESTAQUE -->
+  <!-- APRESENTAÇÃO -->
+
   <section class="hero">
-    <p class="eyebrow">Participe da mudança</p>
-    <h1>Um bairro melhor começa com <span>você.</span></h1>
-    <p class="txt">Registre problemas urbanos, mantenha tudo organizado e acompanhe em um só lugar.</p>
-    <a class="btn" href="cadastro.html">＋ Registrar problema</a>
+
+    <div class="hero-conteudo">
+
+      <div class="hero-tag">
+        <span class="status-dot"></span>
+        PARTICIPAÇÃO CIDADÃ
+      </div>
+
+      <h1>
+        Uma cidade melhor
+        começa com <span>boas atitudes.</span>
+      </h1>
+
+      <p class="hero-texto">
+        Sua participação contribui para uma Nova Londrina
+        mais organizada, segura e desenvolvida.
+      </p>
+
+      <a href="cadastro.html" class="btn-principal">
+        <span>＋</span>
+        Registrar ocorrência
+        <span class="seta">↗</span>
+      </a>
+
+    </div>
+
+    <div class="hero-decoracao" aria-hidden="true">
+      <div class="circulo circulo-1"></div>
+      <div class="circulo circulo-2"></div>
+      <div class="hero-simbolo">NL</div>
+    </div>
+
+    <div class="hero-rodape">
+      <span>GESTÃO COLABORATIVA</span>
+      <span>NOVA LONDRINA · PR</span>
+    </div>
+
   </section>
 
-  <!-- VISÃO GERAL -->
-  <section aria-labelledby="t-visao">
-    <p class="rotulo">Visão geral</p>
-    <h2 id="t-visao">Seus registros</h2>
-    <div class="stats">
-      <div class="cartao stat">
-        <i aria-hidden="true">📋</i>
-        <small>Total registrados</small>
-        <b id="total">0</b>
-      </div>
-      <div class="cartao stat">
-        <i aria-hidden="true">🕒</i>
-        <small>Em acompanhamento</small>
-        <b id="andamento">0</b>
+
+  <!-- INDICADORES -->
+
+  <section class="secao">
+
+    <div class="secao-cabecalho">
+      <div>
+        <span class="sobretitulo">PAINEL PESSOAL</span>
+        <h2>Visão geral</h2>
+        <p class="descricao">
+          Acompanhe sua participação na cidade.
+        </p>
       </div>
     </div>
+
+    <div class="stats">
+
+      <article class="stat-card">
+        <div class="stat-topo">
+          <span class="stat-icone">▤</span>
+          <span class="stat-legenda">REGISTROS</span>
+        </div>
+
+        <div class="stat-numero" id="total">0</div>
+
+        <div class="stat-descricao">
+          Total de registros realizados
+        </div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-topo">
+          <span class="stat-icone">◷</span>
+          <span class="stat-legenda">ACOMPANHAMENTO</span>
+        </div>
+
+        <div class="stat-numero" id="andamento">0</div>
+
+        <div class="stat-descricao">
+          Registros em acompanhamento
+        </div>
+      </article>
+
+    </div>
+
   </section>
 
-  <!-- REGISTROS RECENTES -->
-  <section aria-labelledby="t-recentes">
-    <div class="cab">
+
+  <!-- REGISTROS -->
+
+  <section class="secao">
+
+    <div class="secao-cabecalho cab-registros">
+
       <div>
-        <p class="rotulo">Acompanhamento</p>
-        <h2 id="t-recentes">Registros recentes</h2>
+        <span class="sobretitulo">MONITORAMENTO</span>
+        <h2>Atividade recente</h2>
+        <p class="descricao">
+          Consulte os últimos problemas registrados.
+        </p>
       </div>
-      <a href="registros.html">Ver todos</a>
+
+      <a href="registros.html" class="link-ver">
+        Ver todos <span>↗</span>
+      </a>
+
     </div>
 
     <div class="vazio" id="vazio">
-      <i aria-hidden="true">📋</i>
-      <h3>Tudo começa com você!</h3>
-      <p>Você ainda não registrou problemas. Quando fizer seu primeiro registro, ele aparecerá aqui.</p>
-      <a class="btn azul" href="cadastro.html">Registrar primeiro problema</a>
+
+      <div class="vazio-icone">▤</div>
+
+      <h3>Nenhum registro por enquanto</h3>
+
+      <p>
+        Quando você realizar seu primeiro registro,
+        as informações aparecerão nesta área.
+      </p>
+
+      <a href="cadastro.html" class="btn-secundario">
+        ＋ Criar primeiro registro
+      </a>
+
     </div>
+
     <ul class="lista" id="recentes" hidden></ul>
+
   </section>
 
-  <!-- DICA -->
-  <div class="dica" role="note">
-    <span aria-hidden="true">💡</span>
-    <p>Seja específico ao descrever o local. Isso ajuda a identificar o registro depois.</p>
-  </div>
+
+  <!-- INFORMAÇÃO -->
+
+  <aside class="dica">
+
+    <div class="dica-icone">i</div>
+
+    <div>
+      <strong>Uma informação importante</strong>
+      <p>
+        Descreva o local e o problema com o máximo de
+        detalhes possível. Isso facilita a identificação
+        e o acompanhamento de cada registro.
+      </p>
+    </div>
+
+  </aside>
+
 
   <!-- RODAPÉ -->
+
   <footer class="rodape">
-    <p>Este é um protótipo de demonstração: seus registros ficam salvos apenas neste navegador e não são enviados a nenhum órgão público.</p>
-    <div><span>Obras e melhorias da cidade</span><span>Nova Londrina</span></div>
+
+    <div class="rodape-marca">
+      <div class="logo logo-pequeno">NL</div>
+
+      <div>
+        <strong>Minha Nova Londrina</strong>
+        <span>Gestão urbana participativa</span>
+      </div>
+    </div>
+
+    <p class="aviso">
+      Plataforma em fase de demonstração.
+      Os registros são armazenados apenas neste navegador
+      e não são enviados aos órgãos públicos.
+    </p>
+
+    <div class="rodape-final">
+      <span>© 2026 Minha Nova Londrina</span>
+      <span>Nova Londrina · Paraná</span>
+    </div>
+
   </footer>
 
 </main>
 
-<!-- BARRA INFERIOR -->
+
+<!-- NAVEGAÇÃO INFERIOR -->
+
 <nav class="barra" aria-label="Navegação principal">
+
   <ul>
-    <li><a href="index.html" aria-current="page"><span aria-hidden="true">🏠</span>Início</a></li>
-    <li><a href="registros.html"><span aria-hidden="true">📋</span>Registros</a></li>
-    <li><a href="cadastro.html"><span aria-hidden="true">＋</span>Novo</a></li>
+
+    <li>
+      <a href="index.html" aria-current="page">
+        <span class="nav-icone">⌂</span>
+        <span>Início</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="registros.html">
+        <span class="nav-icone">▤</span>
+        <span>Registros</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="cadastro.html">
+        <span class="nav-icone">＋</span>
+        <span>Novo registro</span>
+      </a>
+    </li>
+
   </ul>
+
 </nav>
 
 </body>
