@@ -1,4 +1,6 @@
 
+/* RESET E CONFIGURAÇÃO */
+
 * {
   margin: 0;
   padding: 0;
@@ -9,11 +11,9 @@
   --verde-escuro: #005b3d;
   --verde: #087a4e;
   --verde-claro: #e4f5e7;
-  --verde-detalhe: #27c65b;
   --texto: #17251f;
   --cinza: #68756f;
   --fundo: #f4f8f5;
-  --branco: #ffffff;
 }
 
 html {
@@ -24,6 +24,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: var(--fundo);
   color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* CABEÇALHO */
@@ -57,6 +59,7 @@ body {
   display: grid;
   place-items: center;
   font-size: 25px;
+  flex-shrink: 0;
 }
 
 .logo h2 {
@@ -70,6 +73,7 @@ body {
 
 nav {
   display: flex;
+  align-items: center;
   gap: 30px;
 }
 
@@ -100,6 +104,7 @@ nav a:hover {
 .hero-texto {
   position: relative;
   z-index: 2;
+  max-width: 55%;
 }
 
 .tag {
@@ -124,6 +129,8 @@ nav a:hover {
   margin-top: 5px;
 }
 
+/* ILUSTRAÇÃO */
+
 .hero-ilustracao {
   position: absolute;
   right: 5%;
@@ -143,7 +150,7 @@ nav a:hover {
   right: 20%;
   width: 65px;
   height: 65px;
-  background: #fff;
+  background: white;
   border-radius: 50%;
 }
 
@@ -203,12 +210,17 @@ nav a:hover {
 .historico {
   position: relative;
   width: min(92%, 1100px);
-  margin: -5px auto 24px;
+  margin: 22px auto;
   padding: 30px;
   border-radius: 23px;
   background: white;
   box-shadow: 0 8px 25px #173f2b12;
   border: 1px solid #e5eee7;
+}
+
+.formulario-card {
+  margin-top: -5px;
+  z-index: 3;
 }
 
 .titulo-formulario {
@@ -226,6 +238,7 @@ nav a:hover {
   display: grid;
   place-items: center;
   font-size: 32px;
+  flex-shrink: 0;
 }
 
 .titulo-formulario h2 {
@@ -236,6 +249,7 @@ nav a:hover {
 .titulo-formulario p {
   color: var(--cinza);
   font-size: 14px;
+  line-height: 1.5;
 }
 
 form {
@@ -246,7 +260,7 @@ form {
 
 .grid-campos {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -269,6 +283,7 @@ form {
 input,
 select,
 textarea {
+  display: block;
   width: 100%;
   min-height: 47px;
   padding: 13px 15px;
@@ -307,6 +322,8 @@ textarea::placeholder {
   margin-top: -4px;
 }
 
+/* DICA */
+
 .dica {
   display: flex;
   align-items: center;
@@ -319,16 +336,20 @@ textarea::placeholder {
   line-height: 1.5;
 }
 
+/* BOTÕES */
+
 .botoes {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 15px;
 }
 
 button {
+  width: 100%;
   min-height: 50px;
   padding: 12px;
   border-radius: 13px;
+  font-family: inherit;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
@@ -362,6 +383,7 @@ button:focus-visible {
   text-align: center;
   font-size: 12px;
   color: var(--cinza);
+  line-height: 1.5;
 }
 
 #mensagem {
@@ -414,6 +436,7 @@ button:focus-visible {
   place-items: center;
   border-radius: 50%;
   font-size: 24px;
+  flex-shrink: 0;
 }
 
 .total {
@@ -449,6 +472,7 @@ button:focus-visible {
   color: var(--cinza);
   font-size: 13px;
   overflow-wrap: anywhere;
+  margin-top: 4px;
 }
 
 .status {
@@ -481,6 +505,7 @@ footer {
 /* RESPONSIVIDADE */
 
 @media (max-width: 700px) {
+
   .header {
     flex-direction: column;
     align-items: flex-start;
@@ -489,8 +514,9 @@ footer {
 
   nav {
     width: 100%;
-    gap: 0;
+    gap: 12px;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   nav a {
@@ -502,14 +528,14 @@ footer {
     padding: 30px 6%;
   }
 
+  .hero-texto {
+    max-width: 100%;
+  }
+
   .hero-ilustracao {
     opacity: .25;
     width: 75%;
     right: -10%;
-  }
-
-  .hero-texto {
-    max-width: 100%;
   }
 
   .formulario-card,
@@ -539,7 +565,6 @@ footer {
     width: 55px;
     height: 55px;
     font-size: 25px;
-    flex-shrink: 0;
   }
 
   .registro {
@@ -548,7 +573,14 @@ footer {
   }
 }
 
+/* CELULARES PEQUENOS */
+
 @media (max-width: 380px) {
+
+  .header {
+    width: calc(100% - 20px);
+  }
+
   .logo h2 {
     font-size: 18px;
   }
@@ -568,5 +600,10 @@ footer {
 
   .historico h2 {
     font-size: 17px;
+  }
+
+  .historico-topo {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

@@ -4,150 +4,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Espaço Elo | Problemas Urbanos</title>
-  <link rel="stylesheet" href="formulario.css">
+  <title>Cadastro de problema urbano</title>
+  <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
 
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">📍</div>
-      <div>
-        <h2>Espaço Elo</h2>
-        <span>Inclusão Digital</span>
-      </div>
-    </div>
+  <main class="page">
 
-    <nav>
-      <a href="#inicio">⌂ Início</a>
-      <a href="#registros">▤ Meus Registros</a>
-      <a href="#sobre">ⓘ Sobre</a>
-    </nav>
-  </header>
+    <a class="back-link" href="#">← Voltar ao início</a>
 
-  <main id="inicio">
+    <header class="page-heading">
+      <p class="eyebrow">PARTICIPE DA MUDANÇA</p>
+      <h1>O que está acontecendo no seu bairro?</h1>
+      <p class="intro">
+        Registre um problema urbano para manter as informações organizadas.
+      </p>
+    </header>
 
-    <section class="hero">
-      <div class="hero-texto">
-        <span class="tag">PARTICIPE DA MUDANÇA</span>
-        <h1>Informe um<br>problema urbano</h1>
-        <p>Ajude a construir uma cidade melhor!</p>
-        <p>Cadastre aqui problemas da sua região.</p>
+    <section class="form-card">
+
+      <div class="card-heading">
+        <h2>Cadastrar problema</h2>
+        <p>Preencha os campos abaixo. Os itens com * são obrigatórios.</p>
       </div>
 
-      <div class="hero-ilustracao" aria-hidden="true">
-        <div class="sol"></div>
-        <div class="predios">
-          <span></span><span></span><span></span>
-          <span></span><span></span>
+      <form id="problem-form">
+
+        <div class="field">
+          <label for="category">
+            Tipo de problema <span class="required-mark">*</span>
+          </label>
+
+          <select id="category" name="category" required>
+            <option value="">Selecione uma categoria</option>
+            <option>Buraco na rua</option>
+            <option>Iluminação pública</option>
+            <option>Coleta de lixo</option>
+            <option>Calçada danificada</option>
+            <option>Vazamento de água</option>
+            <option>Praça ou espaço público</option>
+            <option>Outro</option>
+          </select>
         </div>
-        <div class="arvores">🌳 🌳 🌳</div>
-        <div class="pino">📍</div>
-      </div>
-    </section>
 
-    <section class="formulario-card">
-      <div class="titulo-formulario">
-        <div class="icone-form">📢</div>
-        <div>
-          <h2>Novo Registro</h2>
-          <p>Preencha os campos abaixo para enviar sua sugestão.</p>
+        <div class="field">
+          <label for="problem-name">
+            Nome do problema <span class="required-mark">*</span>
+          </label>
+
+          <input
+            id="problem-name"
+            name="problemName"
+            type="text"
+            maxlength="80"
+            placeholder="Ex.: Buraco na Rua das Flores"
+            required
+          >
         </div>
-      </div>
 
-      <form id="formProblema">
+        <div class="field">
 
-        <div class="grid-campos">
-          <div class="campo">
-            <label for="categoria">Tipo de problema <b>*</b></label>
-            <select id="categoria" required>
-              <option value="">Selecione uma categoria</option>
-              <option>Buraco na rua</option>
-              <option>Iluminação pública</option>
-              <option>Limpeza urbana</option>
-              <option>Calçadas e acessibilidade</option>
-              <option>Praças e espaços públicos</option>
-              <option>Alagamentos</option>
-              <option>Sinalização de trânsito</option>
-              <option>Outros</option>
-            </select>
+          <div class="label-line">
+            <label for="description">
+              Descrição <span class="required-mark">*</span>
+            </label>
+            <span class="optional-note">Até 500 caracteres</span>
           </div>
 
-          <div class="campo">
-            <label for="nome">Nome do problema <b>*</b></label>
-            <input type="text" id="nome"
-              placeholder="Ex: Buraco na rua" maxlength="90" required>
-          </div>
-        </div>
-
-        <div class="campo">
-          <label for="descricao">Descrição <b>*</b></label>
-          <textarea id="descricao" maxlength="500"
+          <textarea
+            id="description"
+            name="description"
+            maxlength="500"
+            rows="5"
             placeholder="Conte um pouco mais sobre o problema..."
-            required></textarea>
-          <div class="contador" id="contador">0/500</div>
-        </div>
+            required
+          ></textarea>
 
-        <div class="grid-campos">
-          <div class="campo">
-            <label for="localizacao">Localização aproximada <b>*</b></label>
-            <input type="text" id="localizacao"
-              placeholder="Ex: Rua das Flores, próximo à praça"
-              maxlength="140" required>
+          <div class="field-meta">
+            <small>Evite incluir informações pessoais.</small>
+            <small id="char-count">0/500</small>
           </div>
 
-          <div class="campo">
-            <label for="referencia">Ponto de referência</label>
-            <input type="text" id="referencia"
-              placeholder="Ex: Igreja, escola, etc."
-              maxlength="100">
-          </div>
         </div>
 
-        <div class="dica">
-          💡
-          <span>Seja específico ao descrever o local. Isso ajuda a equipe a encontrar e resolver o problema.</span>
+        <div class="field">
+          <label for="location">
+            Localização aproximada <span class="required-mark">*</span>
+          </label>
+
+          <input
+            id="location"
+            name="location"
+            type="text"
+            maxlength="120"
+            placeholder="Ex.: Rua das Flores, próximo à praça"
+            required
+          >
+
+          <p class="hint">
+            💡 Seja específico ao descrever o local. Isso ajuda a identificar o registro depois.
+          </p>
         </div>
 
-        <div class="botoes">
-          <button type="submit" class="btn-enviar">
-            ➤ Enviar Registro
+        <div class="field">
+          <label for="reference">
+            Ponto de referência
+            <span class="optional-note">(opcional)</span>
+          </label>
+
+          <input
+            id="reference"
+            name="reference"
+            type="text"
+            maxlength="120"
+            placeholder="Ex.: Em frente à escola municipal"
+          >
+        </div>
+
+        <div class="form-actions">
+          <button class="submit-button" type="submit">
+            Salvar registro
           </button>
 
-          <button type="reset" class="btn-limpar">
-            ▤ Limpar Formulário
-          </button>
+          <p class="privacy-note">
+            Este formulário é uma demonstração: os dados não são enviados a nenhum órgão público.
+          </p>
         </div>
 
-        <p class="aviso">
-          O registro será salvo localmente neste navegador.
-          Nenhum órgão público será notificado automaticamente.
-        </p>
+        <p class="form-message" id="form-message" role="status"></p>
 
-        <div id="mensagem" role="status" aria-live="polite"></div>
       </form>
     </section>
 
-    <section class="historico" id="registros">
-      <div class="historico-topo">
-        <div class="historico-titulo">
-          <span class="icone-historico">◷</span>
-          <h2>Últimos Registros</h2>
-        </div>
-        <span class="total" id="total">0 registros</span>
-      </div>
-
-      <div id="listaRegistros">
-        <p class="vazio">Nenhum registro cadastrado ainda.</p>
-      </div>
-    </section>
+    <footer class="page-footer">
+      <span>Obras e melhorias da cidade</span>
+      <span>Nova Londrina</span>
+    </footer>
 
   </main>
-
-  <footer id="sobre">
-    <p>Espaço Elo — Juntos por uma cidade mais conectada e inclusiva! 💚</p>
-  </footer>
 
 </body>
 </html>
