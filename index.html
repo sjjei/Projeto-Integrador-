@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#142D4E">
+  <meta name="theme-color" content="#174C3C">
 
-  <title>Minha Nova Londrina | Gestão Urbana</title>
+  <title>Minha Nova Londrina | Cidade em movimento</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
@@ -22,20 +23,21 @@
   <div class="topo-in">
 
     <a href="index.html" class="identidade">
-      <div class="logo">NL</div>
+      <img src="Tigre_e_Brasão_de_Nova_Londrina-removebg-preview (1).png" style="width: 80px;">
 
       <div class="marca">
-        <strong>Minha Nova Londrina</strong>
-        <span>PLATAFORMA DE GESTÃO URBANA</span>
+        <p><b> Nova Londrina </b></p>
+        <span>PLATAFORMA CIDADÃ</span>
       </div>
     </a>
 
-    <a class="perfil" href="#" aria-label="Meu perfil">
-      <span>👤</span>
-    </a>
+    <div class="topo-direita">
+      <a class="admin-link" href="admin.html">Administrativo</a>
+    </div>
 
   </div>
 </header>
+
 
 <main>
 
@@ -43,40 +45,61 @@
 
   <section class="hero">
 
-    <div class="hero-conteudo">
-
-      <div class="hero-tag">
-        <span class="status-dot"></span>
-        PARTICIPAÇÃO CIDADÃ
-      </div>
-
-      <h1>
-        Uma cidade melhor
-        começa com <span>boas atitudes.</span>
-      </h1>
-
-      <p class="hero-texto">
-        Sua participação contribui para uma Nova Londrina
-        mais organizada, segura e desenvolvida.
-      </p>
-
-      <a href="cadastro.html" class="btn-principal">
-        <span>＋</span>
-        Registrar ocorrência
-        <span class="seta">↗</span>
-      </a>
-
+    <div class="hero-topo">
+      <span>PARTICIPAÇÃO CIDADÃ</span>
+      <span>GESTÃO URBANA</span>
     </div>
 
-    <div class="hero-decoracao" aria-hidden="true">
-      <div class="circulo circulo-1"></div>
-      <div class="circulo circulo-2"></div>
-      <div class="hero-simbolo">NL</div>
+    <div class="hero-conteudo">
+
+      <div class="hero-texto-principal">
+
+        <span class="hero-etiqueta">
+          <span class="etiqueta-linha"></span>
+          SUA CIDADE, SUA VOZ.
+        </span>
+
+        <h1>
+          A cidade muda<br>
+          quando você<br>
+          <em>participa.</em>
+        </h1>
+
+        <p>
+          Identifique problemas, compartilhe informações
+          e ajude a construir uma Nova Londrina melhor
+          para todos.
+        </p>
+
+        <a href="cadastro.html" class="btn-principal">
+          <span>Registrar uma ocorrência</span>
+        </a>
+
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+
+        <div class="visual-circulo"></div>
+
+        <div class="visual-centro">
+          <span>NL</span>
+          <small>CIDADE<br>EM MOVIMENTO</small>
+        </div>
+
+        <div class="visual-legenda">
+          <span>24° 06' S</span>
+          <span>53° 27' W</span>
+        </div>
+
+        <div class="visual-numero">01</div>
+
+      </div>
+
     </div>
 
     <div class="hero-rodape">
-      <span>GESTÃO COLABORATIVA</span>
-      <span>NOVA LONDRINA · PR</span>
+      <span>UMA PLATAFORMA FEITA PARA A COMUNIDADE</span>
+      <span>PR · BRASIL</span>
     </div>
 
   </section>
@@ -87,41 +110,51 @@
   <section class="secao">
 
     <div class="secao-cabecalho">
+
       <div>
-        <span class="sobretitulo">PAINEL PESSOAL</span>
-        <h2>Visão geral</h2>
-        <p class="descricao">
-          Acompanhe sua participação na cidade.
-        </p>
+        <span class="sobretitulo">SEU ESPAÇO</span>
+        <h2>Acompanhe sua participação.</h2>
       </div>
+
+      <span class="secao-numero">01—02</span>
+
     </div>
 
     <div class="stats">
 
       <article class="stat-card">
+
         <div class="stat-topo">
-          <span class="stat-icone">▤</span>
-          <span class="stat-legenda">REGISTROS</span>
+          <span>REGISTROS REALIZADOS</span>
+          <span class="stat-icone">↗</span>
         </div>
 
         <div class="stat-numero" id="total">0</div>
 
         <div class="stat-descricao">
-          Total de registros realizados
+          Problemas comunicados à plataforma
         </div>
+
+        <div class="stat-linha"></div>
+
       </article>
 
-      <article class="stat-card">
+
+      <article class="stat-card stat-destaque">
+
         <div class="stat-topo">
+          <span>EM ACOMPANHAMENTO</span>
           <span class="stat-icone">◷</span>
-          <span class="stat-legenda">ACOMPANHAMENTO</span>
         </div>
 
         <div class="stat-numero" id="andamento">0</div>
 
         <div class="stat-descricao">
-          Registros em acompanhamento
+          Registros que precisam de acompanhamento
         </div>
+
+        <div class="stat-linha"></div>
+
       </article>
 
     </div>
@@ -133,36 +166,47 @@
 
   <section class="secao">
 
-    <div class="secao-cabecalho cab-registros">
+    <div class="secao-cabecalho registros-cabecalho">
 
       <div>
-        <span class="sobretitulo">MONITORAMENTO</span>
-        <h2>Atividade recente</h2>
+        <span class="sobretitulo">HISTÓRICO</span>
+        <h2>Suas últimas atividades.</h2>
+
         <p class="descricao">
-          Consulte os últimos problemas registrados.
+          Um resumo dos problemas que você registrou.
         </p>
       </div>
 
       <a href="registros.html" class="link-ver">
-        Ver todos <span>↗</span>
+        Explorar histórico <span>↗</span>
       </a>
 
     </div>
 
+
     <div class="vazio" id="vazio">
 
-      <div class="vazio-icone">▤</div>
+      <div class="vazio-ilustracao">
+        <span>＋</span>
+      </div>
 
-      <h3>Nenhum registro por enquanto</h3>
+      <div class="vazio-conteudo">
 
-      <p>
-        Quando você realizar seu primeiro registro,
-        as informações aparecerão nesta área.
-      </p>
+        <span class="vazio-etiqueta">NENHUMA ATIVIDADE</span>
 
-      <a href="cadastro.html" class="btn-secundario">
-        ＋ Criar primeiro registro
-      </a>
+        <h3>Por aqui, tudo começa com você.</h3>
+
+        <p>
+          Seus registros aparecerão nesta área.
+          Quando identificar um problema na cidade,
+          compartilhe com a gente.
+        </p>
+
+        <a href="cadastro.html" class="btn-secundario">
+          Fazer meu primeiro registro ↗
+        </a>
+
+      </div>
 
     </div>
 
@@ -175,14 +219,16 @@
 
   <aside class="dica">
 
-    <div class="dica-icone">i</div>
+    <div class="dica-numero"></div>
 
     <div>
-      <strong>Uma informação importante</strong>
+      <span class="sobretitulo">DICA PARA UM BOM REGISTRO</span>
+
       <p>
-        Descreva o local e o problema com o máximo de
-        detalhes possível. Isso facilita a identificação
-        e o acompanhamento de cada registro.
+        Informe o endereço, descreva o problema e,
+        se possível, adicione uma fotografia.
+        Quanto mais informações, melhor será a identificação
+        da situação.
       </p>
     </div>
 
@@ -193,24 +239,34 @@
 
   <footer class="rodape">
 
-    <div class="rodape-marca">
-      <div class="logo logo-pequeno">NL</div>
+    <div class="rodape-principal">
 
-      <div>
-        <strong>Minha Nova Londrina</strong>
-        <span>Gestão urbana participativa</span>
+      <div class="rodape-marca">
+        <div class="logo logo-pequeno">nl<span>.</span></div>
+
+        <div>
+          <strong>nova londrina</strong>
+          <span>Uma cidade construída por todos.</span>
+        </div>
       </div>
+
+      <a href="cadastro.html" class="rodape-link">
+        FAÇA PARTE <span>↗</span>
+      </a>
+
     </div>
 
-    <p class="aviso">
-      Plataforma em fase de demonstração.
-      Os registros são armazenados apenas neste navegador
-      e não são enviados aos órgãos públicos.
-    </p>
+    <div class="rodape-informacao">
+      <p>
+        Plataforma em fase de demonstração.
+        Os registros são armazenados apenas neste navegador
+        e não são enviados aos órgãos públicos.
+      </p>
+    </div>
 
     <div class="rodape-final">
-      <span>© 2026 Minha Nova Londrina</span>
-      <span>Nova Londrina · Paraná</span>
+      <span>© 2026 · MINHA NOVA LONDRINA</span>
+      <span>DESENVOLVIDO PARA A COMUNIDADE.</span>
     </div>
 
   </footer>
@@ -218,7 +274,7 @@
 </main>
 
 
-<!-- NAVEGAÇÃO INFERIOR -->
+<!-- NAVEGAÇÃO -->
 
 <nav class="barra" aria-label="Navegação principal">
 
@@ -234,14 +290,14 @@
     <li>
       <a href="registros.html">
         <span class="nav-icone">▤</span>
-        <span>Registros</span>
+        <span>Histórico</span>
       </a>
     </li>
 
     <li>
-      <a href="cadastro.html">
+      <a href="cadastro.html" class="nav-novo">
         <span class="nav-icone">＋</span>
-        <span>Novo registro</span>
+        <span>Registrar</span>
       </a>
     </li>
 
