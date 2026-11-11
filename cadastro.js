@@ -7,7 +7,11 @@
   var locationInput = document.querySelector('#location');
   var photoName = document.querySelector('#photo-name');
   var coordinates = null;
-  photo.addEventListener('change', function () { photoName.textContent = photo.files[0] ? photo.files[0].name : 'Nenhuma imagem selecionada.'; });
+  photo.addEventListener('change', function () {
+    var file = photo.files[0];
+    if (file && file.size > 5 * 1024 * 1024) { photo.value = ''; photoName.textContent = 'Imagem maior que 5 MB. Escolha outra.'; return; }
+    photoName.textContent = file ? file.name : 'Nenhuma imagem selecionada.';
+  });
   document.querySelector('#get-location').addEventListener('click', function () {
     var status = document.querySelector('#location-status');
     if (!navigator.geolocation) { status.textContent = 'Geolocalizacao indisponivel neste navegador.'; return; }
@@ -25,6 +29,7 @@
     if (!coordinates && !locationInput.value.trim()) locationInput.setCustomValidity('Informe a localizacao aproximada ou use sua localizacao.'); else locationInput.setCustomValidity('');
     if (!form.reportValidity()) return;
     var registro = Object.fromEntries(new FormData(form).entries());
+    registro.nome = registro.nome.trim(); registro.descricao = registro.descricao.trim(); registro.local = (registro.local || '').trim(); registro.referencia = (registro.referencia || '').trim();
     delete registro.foto;
     registro.id = Date.now(); registro.status = 'em_acompanhamento'; registro.data = new Date().toISOString();
     if (coordinates) registro.coordenadas = coordinates;
