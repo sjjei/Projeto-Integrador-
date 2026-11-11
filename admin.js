@@ -1,4 +1,17 @@
 (function () {
+  var loginPanel = document.querySelector('#login-panel');
+  var loginForm = document.querySelector('#login-form');
+  var loginError = document.querySelector('#login-error');
+  loginForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var data = new FormData(loginForm);
+    if (data.get('usuario') === 'admin' && data.get('senha') === 'admin') {
+      loginPanel.classList.add('is-hidden');
+      setTimeout(function () { loginPanel.remove(); }, 450);
+      return;
+    }
+    loginError.hidden = false;
+  });
   var registros = read();
   var list = document.querySelector('#admin-list');
   document.querySelector('#admin-total').textContent = registros.length;

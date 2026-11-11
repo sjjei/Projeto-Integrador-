@@ -236,7 +236,7 @@ main {
 .registro-form input, .registro-form select { min-height:46px; }
 .registro-form textarea { resize:vertical; min-height:125px; }
 .registro-form input:focus, .registro-form select:focus, .registro-form textarea:focus { outline:2px solid var(--orange); outline-offset:1px; border-color:var(--orange); }
-.form-submit { border:0; cursor:pointer; margin-top:3px; width:100%; }
+.form-submit { border:0; cursor:pointer; margin-top:3px; width:100%; justify-content:center; gap:0; }
 .form-note { margin-top:13px; text-align:center; color:var(--muted); font-size:10px; }
 .form-message { display:none; margin-top:17px; padding:13px; background:var(--green-light); color:var(--green); font-size:12px; font-weight:700; }
 .form-message.is-visible { display:block; }
@@ -281,6 +281,22 @@ button, .btn-principal, .link-ver, .rodape-link, .btn-secundario, .photo-upload,
 .admin-actions { display:flex; gap:9px; margin-top:18px; }.admin-actions button { padding:8px 13px; border:1px solid var(--green); background:transparent; color:var(--green); font:700 10px var(--font); cursor:pointer; }.admin-actions .admin-delete { border-color:var(--orange); color:var(--orange); }.admin-actions button:hover { background:var(--green); color:var(--white); }.admin-actions .admin-delete:hover { background:var(--orange); }
 .admin-actions .admin-complete { border-color:var(--green); color:var(--green); }.admin-actions .admin-complete:hover { background:var(--green); color:var(--white); }.admin-actions .admin-complete.is-done { opacity:.55; cursor:default; }
 .status-concluido { color:var(--green); }.status-aberto { color:var(--orange); }
+
+.login-painel { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:24px; background:rgba(16,56,45,.94); animation:login-entrada .45s ease both; transition:opacity .4s ease; }
+.login-painel.is-hidden { opacity:0; pointer-events:none; }
+.login-card { width:min(100%, 390px); padding:34px; background:var(--paper); box-shadow:0 24px 70px rgba(0,0,0,.2); animation:login-card-entrada .55s .08s ease both; }
+.login-card h1 { margin-top:8px; font:800 clamp(30px, 6vw, 42px)/1 var(--display); letter-spacing:-2px; }
+.login-card h1 em { color:var(--orange); font-style:normal; }
+.login-card > p { margin-top:12px; color:var(--muted); font-size:12px; }
+.login-form { display:grid; gap:8px; margin-top:24px; }
+.login-form label { color:var(--ink); font-size:10px; font-weight:800; letter-spacing:.7px; text-transform:uppercase; }
+.login-form input { width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line); background:var(--white); color:var(--ink); font:13px var(--font); }
+.login-form input:focus { outline:2px solid var(--orange); outline-offset:1px; border-color:var(--orange); }
+.login-form button { min-height:44px; margin-top:10px; border:0; background:var(--green); color:var(--white); font:800 11px var(--font); letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:var(--transition); }
+.login-form button:hover { background:var(--green-dark); }
+.login-error { margin:4px 0 0; color:var(--orange); font-size:11px; font-weight:700; }
+@keyframes login-entrada { from { opacity:0; } to { opacity:1; } }
+@keyframes login-card-entrada { from { opacity:0; transform:translateY(18px) scale(.98); } to { opacity:1; transform:none; } }
 
 
 /* HERO */
