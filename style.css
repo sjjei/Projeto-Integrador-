@@ -250,9 +250,15 @@ main {
 .history-card h3 { margin-top:13px; font:800 20px/1.2 var(--display); letter-spacing:-.7px; }
 .history-card p { margin-top:8px; color:var(--muted); font-size:12px; }
 .history-meta { margin-top:18px; padding-top:12px; border-top:1px solid var(--line); color:var(--muted); font-size:10px; }
+.history-delete { margin-top:16px; padding:8px 11px; border:1px solid var(--orange); background:transparent; color:var(--orange); font:700 10px var(--font); cursor:pointer; transition:var(--transition); }
+.history-delete:hover { background:var(--orange); color:var(--white); }
 .location-button { display:block; margin-top:9px; padding:8px 11px; border:1px solid var(--green); background:var(--green-light); color:var(--green); font:700 10px var(--font); cursor:pointer; }
 .location-button:hover { background:var(--green); color:var(--white); }
 .field-help { display:block; margin-top:6px; color:var(--muted); font-size:10px; }
+.photo-upload { display:inline-flex; align-items:center; padding:5px 9px; background:var(--orange); color:var(--white); font-size:10px; font-weight:800; cursor:pointer; transition:var(--transition); }
+.field .photo-upload { display:inline-flex; width:max-content; }
+.photo-upload:hover { background:var(--green); }
+button, .btn-principal, .link-ver, .rodape-link, .btn-secundario, .photo-upload, .location-button { border-radius:4px; }
 .admin-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:42px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 .admin-summary > div { padding:20px 24px 18px 0; }.admin-summary > div + div { padding-left:24px; border-left:1px solid var(--line); }
 .admin-summary strong { display:block; margin-top:4px; color:var(--green); font:800 37px/1 var(--display); }
@@ -615,6 +621,16 @@ main {
   background: var(--green);
 }
 
+.home-dashboard { display:grid; grid-template-columns:1.15fr .85fr; gap:18px; margin-top:22px; }
+.home-chart { padding:22px 24px; background:var(--white); border:1px solid var(--line); }
+.chart-title strong { display:block; margin-top:3px; font:800 17px/1.2 var(--display); letter-spacing:-.5px; }
+.home-bars { display:grid; gap:12px; margin-top:20px; }
+.home-bar-row > div { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:10px; }
+.home-bar-row strong { color:var(--green); }.home-bar-row i { display:block; height:6px; margin-top:6px; background:var(--orange); }
+.status-chart { display:grid; gap:13px; margin-top:21px; }
+.status-chart-item { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:9px; color:var(--muted); font-size:11px; }
+.status-chart-item strong { color:var(--green); }.status-chart-dot { width:9px; height:9px; background:var(--green); border-radius:50%; }.status-chart-item.is-done .status-chart-dot { background:var(--orange); }
+
 
 /* REGISTROS */
 
@@ -774,8 +790,8 @@ main {
 
 .lista li:hover {
   background: var(--white);
-  border-color: var(--green);
-  box-shadow: 5px 5px 0 var(--green-light);
+  border-color: var(--line);
+  box-shadow: 5px 5px 0 var(--sand);
   transform: translate(-2px, -2px);
 }
 
@@ -1138,6 +1154,9 @@ main {
   .stat-descricao {
     font-size: 10px;
   }
+
+  .home-dashboard { grid-template-columns:1fr; gap:12px; }
+  .home-chart { padding:19px 16px; }
 
   .registros-cabecalho {
     align-items: flex-start;

@@ -21,4 +21,5 @@
   });
   document.getElementById('vazio').hidden = true;
   ul.hidden = false;
+
 })();
