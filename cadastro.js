@@ -7,6 +7,7 @@
   var locationInput = document.querySelector('#location');
   var photoName = document.querySelector('#photo-name');
   var coordinates = null;
+  document.querySelector('.form-submit span').textContent = 'Registrar problema';
   photo.addEventListener('change', function () {
     var file = photo.files[0];
     if (file && file.size > 5 * 1024 * 1024) { photo.value = ''; photoName.textContent = 'Imagem maior que 5 MB. Escolha outra.'; return; }
@@ -38,7 +39,7 @@
       if (imageData) registro.foto = imageData;
       registros.push(registro);
       try { localStorage.setItem('registros', JSON.stringify(registros)); } catch (error) { message.textContent = 'A foto e muito grande para o armazenamento local. Remova-a e tente novamente.'; message.classList.add('is-visible'); return; }
-      message.textContent = 'Registro salvo com sucesso. Obrigado por participar!'; message.classList.add('is-visible'); form.reset(); charCount.textContent = '0/500'; photoName.textContent = 'Nenhuma imagem selecionada.'; coordinates = null;
+      window.location.assign('registros.html');
     }
     if (photo.files[0]) { var reader = new FileReader(); reader.onload = function () { save(reader.result); }; reader.readAsDataURL(photo.files[0]); } else save(null);
   });
