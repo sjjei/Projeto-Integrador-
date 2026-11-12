@@ -11,12 +11,9 @@
   var adminHeader = document.querySelector('.topo');
   var loginAttempts = 0;
   var editingId = null;
-  var apiToken = '';
   var novaLondrinaCenter = [-22.765, -52.985];
   var novaLondrinaBounds = [[-22.86, -53.12], [-22.67, -52.86]];
-  var simpleAdminPassword = 'admin123';
   adminHeader.hidden = true;
-  adminContent.hidden = true;
 
   loginForm.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -26,7 +23,11 @@
       loginError.hidden = false;
       return;
     }
-    if (data.get('usuario').trim().toLowerCase() === 'admin' && data.get('senha') === simpleAdminPassword) { unlockAdmin(); fetchRemoteRecords().then(function (remoteRecords) { registros = remoteRecords; populateCategories(); renderAll(); }).catch(function () { showToast('Não foi possível carregar os registros online.'); }); return; }
+    var passwordHash = await hashText(data.get('senha'));
+    if (data.get('usuario').trim().toLowerCase() === 'admin' && passwordHash === '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918') {
+      unlockAdmin();
+      return;
+    }
     loginAttempts += 1;
     loginError.hidden = false;
   });
@@ -48,7 +49,6 @@
     adminHeader.hidden = false;
     setTimeout(function () { loginPanel.remove(); }, 450);
   }
-  async function fetchRemoteRecords() { var response = await fetch('/api/records', { headers: { authorization: 'Bearer ' + apiToken } }); if (!response.ok) throw new Error('Não foi possível carregar os registros.'); var data = await response.json(); return Array.isArray(data.records) ? data.records : []; }
   async function hashText(value) {
     var bytes = new TextEncoder().encode(value);
     var digest = await crypto.subtle.digest('SHA-256', bytes);
@@ -148,18 +148,17 @@
     list.querySelectorAll('.admin-delete').forEach(function (button) { button.addEventListener('click', function () { remove(Number(button.dataset.id)); }); });
   }
   function statusOptions(current) { return Object.keys(statuses).map(function (key) { return '<option value="' + key + '"' + (normalizedStatus(current) === key ? ' selected' : '') + '>' + statuses[key] + '</option>'; }).join(''); }
-  async function updateStatus(id, status) { var record = registros.find(function (item) { return item.id === id; }); if (!record) return; try { await apiRequest('PATCH', { id: id, status: status }); record.status = status; record.atualizadoEm = new Date().toISOString(); showToast('Status atualizado com sucesso.'); renderAll(); } catch (error) { showToast('Não foi possível atualizar o status.'); renderAll(); } }
+  function updateStatus(id, status) { var record = registros.find(function (item) { return item.id === id; }); if (!record) return; record.status = status; record.atualizadoEm = new Date().toISOString(); write(); showToast('Status atualizado com sucesso.'); renderAll(); }
   function edit(id) { var record = registros.find(function (item) { return item.id === id; }); if (!record) return; editingId = id; document.querySelector('#edit-name').value = record.nome || ''; document.querySelector('#edit-description').value = record.descricao || ''; document.querySelector('#edit-form-error').hidden = true; document.querySelector('#edit-modal').hidden = false; document.querySelector('#edit-name').focus(); }
-  async function saveEdit(event) { event.preventDefault(); var name = document.querySelector('#edit-name').value.trim(); var description = document.querySelector('#edit-description').value.trim(); var error = document.querySelector('#edit-form-error'); if (name.length < 3 || description.length < 10) { error.textContent = 'Informe um nome com pelo menos 3 caracteres e uma descrição com pelo menos 10.'; error.hidden = false; return; } var record = registros.find(function (item) { return item.id === editingId; }); if (!record) return closeEdit(); try { await apiRequest('PATCH', { id: editingId, nome: name, descricao: description }); record.nome = name; record.descricao = description; record.atualizadoEm = new Date().toISOString(); closeEdit(); showToast('Ocorrência atualizada com sucesso.'); renderAll(); } catch (requestError) { error.textContent = 'Não foi possível salvar as alterações.'; error.hidden = false; } }
+  function saveEdit(event) { event.preventDefault(); var name = document.querySelector('#edit-name').value.trim(); var description = document.querySelector('#edit-description').value.trim(); var error = document.querySelector('#edit-form-error'); if (name.length < 3 || description.length < 10) { error.textContent = 'Informe um nome com pelo menos 3 caracteres e uma descrição com pelo menos 10.'; error.hidden = false; return; } var record = registros.find(function (item) { return item.id === editingId; }); if (!record) return closeEdit(); record.nome = name; record.descricao = description; record.atualizadoEm = new Date().toISOString(); write(); closeEdit(); showToast('Ocorrência atualizada com sucesso.'); renderAll(); }
   function closeEdit() { editingId = null; document.querySelector('#edit-modal').hidden = true; }
-  async function remove(id) { if (!confirm('Excluir esta ocorrência? Esta ação não pode ser desfeita.')) return; try { await apiRequest('DELETE', { id: id }); registros = registros.filter(function (r) { return r.id !== id; }); showToast('Ocorrência excluída.'); populateCategories(); renderAll(); } catch (error) { showToast('Não foi possível excluir a ocorrência.'); } }
+  function remove(id) { if (!confirm('Excluir esta ocorrência? Esta ação não pode ser desfeita.')) return; registros = registros.filter(function (r) { return r.id !== id; }); write(); showToast('Ocorrência excluída.'); populateCategories(); renderAll(); }
   function exportCsv() { var source = getFiltered(); if (!source.length) { showToast('Não há ocorrências para exportar.'); return; } var columns = ['id', 'data', 'tipo', 'nome', 'descricao', 'local', 'referencia', 'status']; var csv = [columns.join(';')].concat(source.map(function (r) { return columns.map(function (column) { return csvCell(r[column]); }).join(';'); })).join('\r\n'); var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' }); var link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'ocorrencias-nova-londrina.csv'; link.click(); URL.revokeObjectURL(link.href); showToast('CSV exportado com sucesso.'); }
   function csvCell(value) { return '"' + String(value == null ? '' : value).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"'; }
   function showToast(text) { var toast = document.querySelector('#admin-toast'); toast.textContent = text; toast.classList.add('is-visible'); clearTimeout(showToast.timer); showToast.timer = setTimeout(function () { toast.classList.remove('is-visible'); }, 2800); }
   function normalizedStatus(value) { return Object.prototype.hasOwnProperty.call(statuses, value) ? value : 'em_acompanhamento'; }
   function read() { try { var data = JSON.parse(localStorage.getItem('registros') || '[]'); return Array.isArray(data) ? data : []; } catch (e) { return []; } }
   function write() { localStorage.setItem('registros', JSON.stringify(registros)); }
-  async function apiRequest(method, body) { var response = await fetch('/api/records', { method: method, headers: { 'content-type': 'application/json', authorization: 'Bearer ' + apiToken }, body: JSON.stringify(body) }); if (!response.ok) throw new Error('Falha na API'); return response.json(); }
   function safe(value) { var div = document.createElement('div'); div.textContent = value == null ? '' : value; return div.innerHTML; }
   function date(value) { return value ? new Date(value).toLocaleDateString('pt-BR') : 'Data não informada'; }
   function label(value) { return statuses[normalizedStatus(value)]; }
