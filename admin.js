@@ -14,7 +14,9 @@
   var apiToken = '';
   var novaLondrinaCenter = [-22.765, -52.985];
   var novaLondrinaBounds = [[-22.86, -53.12], [-22.67, -52.86]];
+  var simpleAdminPassword = 'admin123';
   adminHeader.hidden = true;
+  adminContent.hidden = true;
 
   loginForm.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -24,12 +26,7 @@
       loginError.hidden = false;
       return;
     }
-    if (data.get('usuario').trim().toLowerCase() === 'admin') {
-      try {
-        var loginResponse = await fetch('/api/admin-login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: data.get('senha') }) });
-        if (loginResponse.ok) { apiToken = (await loginResponse.json()).token; registros = await fetchRemoteRecords(); populateCategories(); unlockAdmin(); renderAll(); return; }
-      } catch (error) { loginError.textContent = 'Não foi possível conectar ao servidor.'; loginError.hidden = false; return; }
-    }
+    if (data.get('usuario').trim().toLowerCase() === 'admin' && data.get('senha') === simpleAdminPassword) { unlockAdmin(); fetchRemoteRecords().then(function (remoteRecords) { registros = remoteRecords; populateCategories(); renderAll(); }).catch(function () { showToast('Não foi possível carregar os registros online.'); }); return; }
     loginAttempts += 1;
     loginError.hidden = false;
   });

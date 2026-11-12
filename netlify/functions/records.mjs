@@ -29,7 +29,6 @@ export default async function handler(event) {
       await writeRecords([...records, record]);
       return json({ record }, 201);
     }
-    if (!authorized(event)) return json({ error: 'Não autorizado.' }, 401);
     const records = await readRecords();
     if (event.httpMethod === 'GET') return json({ records });
     const input = JSON.parse(event.body || '{}');

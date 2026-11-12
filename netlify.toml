@@ -3,11 +3,6 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/api/admin-login"
-  to = "/.netlify/functions/admin-login"
-  status = 200
-
-[[redirects]]
   from = "/api/records"
   to = "/.netlify/functions/records"
   status = 200
