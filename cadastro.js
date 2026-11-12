@@ -37,9 +37,7 @@
     var registros = JSON.parse(localStorage.getItem('registros') || '[]'); if (!Array.isArray(registros)) registros = [];
     function save(imageData) {
       if (imageData) registro.foto = imageData;
-      registros.push(registro);
-      try { localStorage.setItem('registros', JSON.stringify(registros)); } catch (error) { message.textContent = 'A foto e muito grande para o armazenamento local. Remova-a e tente novamente.'; message.classList.add('is-visible'); return; }
-      window.location.assign('registros.html');
+      fetch('/api/records', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(registro) }).then(function (response) { if (!response.ok) throw new Error('Falha ao salvar'); return response.json(); }).then(function () { registros.push(registro); localStorage.setItem('registros', JSON.stringify(registros)); window.location.assign('registros.html'); }).catch(function () { message.textContent = 'Não foi possível salvar agora. Verifique a conexão e tente novamente.'; message.classList.add('is-visible'); });
     }
     if (photo.files[0]) { var reader = new FileReader(); reader.onload = function () { save(reader.result); }; reader.readAsDataURL(photo.files[0]); } else save(null);
   });
