@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#174C3C">
+  <title>Administrativo | Minha Nova Londrina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="style.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script><script src="admin.js" defer></script>
+</head>
+<body class="no-bottom-nav admin-page">
+  <section class="login-painel" id="login-panel" aria-labelledby="login-title">
+    <div class="login-card">
+      <a class="login-brand" href="index.html" aria-label="Voltar para Minha Nova Londrina"><img src="Tigre_e_Brasão_de_Nova_Londrina-removebg-preview (1).png" alt="BrasÃ£o de Nova Londrina"><span><strong>Nova Londrina</strong><small>PLATAFORMA CIDADÃ</small></span></a>
+      <span class="sobretitulo">ACESSO RESTRITO</span>
+      <h1 id="login-title">Painel <em>administrativo.</em></h1>
+      <p>Entre com seu usuário e senha para continuar.</p>
+      <form id="login-form" class="login-form">
+        <label for="login-user">Usuário</label>
+        <input id="login-user" name="usuario" autocomplete="username" required>
+        <label for="login-password">Senha</label>
+        <input id="login-password" name="senha" type="password" autocomplete="current-password" required>
+        <button type="submit">Entrar</button>
+        <p class="login-error" id="login-error" role="alert" hidden>Usuário ou senha incorretos.</p>
+      </form>
+    </div>
+  </section>
+  <header class="topo"><div class="topo-in"><a href="index.html" class="identidade"><img src="Tigre_e_Brasão_de_Nova_Londrina-removebg-preview (1).png" alt="Brasao de Nova Londrina" style="width:80px"><div class="marca"><strong>Nova Londrina</strong><span>PLATAFORMA CIDADÃ</span></div></a><a class="perfil" href="index.html" aria-label="Voltar ao inicio">↗</a></div></header>
+  <main id="admin-content" hidden>
+    <section class="page-intro"><div><span class="sobretitulo">04 / GESTAO</span><h1>Painel <em>administrativo.</em></h1><p>Acompanhe as ocorrencias, atualize os status e consulte os locais registrados.</p></div><span class="page-mark">NL / ADM</span></section>
+    <section class="admin-summary"><div><span class="sobretitulo">TOTAL</span><strong id="admin-total">0</strong></div><div><span class="sobretitulo">EM ACOMPANHAMENTO</span><strong id="admin-open">0</strong></div><div><span class="sobretitulo">CONCLUIDAS</span><strong id="admin-done">0</strong></div></section>
+    <section class="admin-dashboard"><div class="dashboard-map"><div class="dashboard-heading"><span class="sobretitulo">MAPA DE OCORRENCIAS</span><h2>Veja os registros pela cidade.</h2></div><div id="all-map" class="all-map" aria-label="Mapa com todas as ocorrencias"></div><p id="map-empty" class="map-empty" hidden>Nenhum registro possui coordenadas. Solicite a localizacao no formulario para exibir os pontos no mapa.</p></div><div class="dashboard-chart"><span class="sobretitulo">DISTRIBUICAO</span><h2>Tipos de problema.</h2><div id="category-chart" class="category-chart"></div></div></section>
+    <section class="admin-insights" aria-label="Indicadores adicionais"><div class="dashboard-chart"><span class="sobretitulo">EVOLUCAO</span><h2>Registros por mes.</h2><div id="monthly-chart" class="monthly-chart"></div></div><div class="dashboard-chart insight-highlight"><span class="sobretitulo">EFICIENCIA</span><strong id="completion-rate">0%</strong><p>das ocorrencias foram concluidas.</p></div></section>
+    <section class="admin-filtros" aria-label="Filtros de ocorrencias">
+      <div class="filtro-busca"><label for="admin-search">Buscar ocorrencia</label><input id="admin-search" type="search" placeholder="Nome, descricao ou local..." autocomplete="off"><div class="search-suggestions" id="search-suggestions" hidden></div></div>
+      <div><label for="admin-status-filter">Status</label><select id="admin-status-filter"><option value="todos">Todos</option><option value="aberto">Aberta</option><option value="em_acompanhamento">Em acompanhamento</option><option value="em_analise">Em analise</option><option value="concluido">Concluida</option><option value="rejeitado">Rejeitada</option></select></div>
+      <div><label for="admin-category-filter">Categoria</label><select id="admin-category-filter"><option value="todos">Todas</option></select></div>
+      <button class="export-button" id="export-csv" type="button">Exportar CSV</button>
+    </section>
+    <section class="admin-toolbar"><div><span class="sobretitulo">OCORRENCIAS</span><h2>Registros da comunidade</h2></div></section>
+    <p class="result-count" id="result-count" aria-live="polite"></p>
+    <section id="admin-empty" class="vazio"><div class="vazio-ilustracao">＋</div><div class="vazio-conteudo"><span class="vazio-etiqueta">SEM REGISTROS</span><h3>Nenhuma ocorrencia para acompanhar.</h3><p>Os novos registros feitos pela comunidade aparecerao aqui.</p></div></section>
+    <section id="admin-list" class="admin-list" hidden></section>
+  </main>
+  <p class="toast" id="admin-toast" role="status" aria-live="polite"></p>
+  <section class="admin-modal" id="edit-modal" hidden aria-labelledby="edit-modal-title" role="dialog" aria-modal="true">
+    <div class="admin-modal-card">
+      <button class="admin-modal-close" id="edit-cancel-top" type="button" aria-label="Fechar edição">×</button>
+      <span class="sobretitulo">ATUALIZAÇÃO</span><h2 id="edit-modal-title">Editar ocorrência.</h2><p class="admin-modal-intro">Atualize os dados principais deste registro da comunidade.</p>
+      <form id="edit-form" class="edit-form"><label for="edit-name">Nome do problema</label><input id="edit-name" name="nome" maxlength="80" required><label for="edit-description">Descrição</label><textarea id="edit-description" name="descricao" maxlength="500" rows="5" required></textarea><p class="edit-form-error" id="edit-form-error" role="alert" hidden></p><div class="edit-form-actions"><button class="admin-modal-secondary" id="edit-cancel" type="button">Cancelar</button><button class="admin-modal-primary" type="submit">Salvar alterações</button></div></form>
+    </div>
+  </section>
+</body></html>
