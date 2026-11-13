@@ -53,7 +53,8 @@
     loginPanel.classList.add('is-hidden');
     adminContent.hidden = false;
     adminHeader.hidden = false;
-    setTimeout(function () { renderMap(registros); }, 120);
+    setTimeout(function () { renderAll(); }, 120);
+    setTimeout(function () { renderAll(); }, 520);
     setTimeout(function () { loginPanel.remove(); }, 450);
   }
 
@@ -147,12 +148,12 @@
     var boundsRatio = (east - west) / (north - south);
     if (boundsRatio < ratio) { var centerLongitude = (west + east) / 2; var halfLongitude = (north - south) * ratio / 2; west = centerLongitude - halfLongitude; east = centerLongitude + halfLongitude; }
     if (boundsRatio > ratio) { var centerLatitude = (south + north) / 2; var halfLatitude = (east - west) / ratio / 2; south = centerLatitude - halfLatitude; north = centerLatitude + halfLatitude; }
-    var markers = points.map(function (item) {
+    var markers = points.map(function (item, index) {
       var latitude = Number(item.coordenadas.latitude); var longitude = Number(item.coordenadas.longitude);
       var left = Math.max(2, Math.min(98, (longitude - west) / (east - west) * 100)); var top = Math.max(2, Math.min(98, (north - latitude) / (north - south) * 100));
-      return '<button class="city-map-marker" type="button" style="left:' + left + '%;top:' + top + '%" title="' + safe(item.nome || 'Ocorrência') + '" aria-label="Abrir ocorrência ' + safe(item.nome || 'sem título') + '" data-name="' + safe(item.nome || 'Ocorrência') + '" data-type="' + safe(item.tipo || 'Outro') + '" data-status="' + safe(label(item.status)) + '"></button>';
+      return '<button class="city-map-marker" type="button" style="left:' + left + '%;top:' + top + '%" title="' + safe(item.nome || 'Ocorrência') + '" aria-label="Abrir ocorrência ' + safe(item.nome || 'sem título') + '" data-number="' + (index + 1) + '" data-name="' + safe(item.nome || 'Ocorrência') + '" data-type="' + safe(item.tipo || 'Outro') + '" data-status="' + safe(label(item.status)) + '"></button>';
     }).join('');
-    map.innerHTML = '<iframe class="fallback-map" title="Mapa de todas as ocorrências" loading="eager" src="' + osmEmbedBounds(south, west, north, east, points[0].coordenadas.latitude, points[0].coordenadas.longitude) + '"></iframe><div class="city-map-markers" aria-label="Pontos de ocorrência">' + markers + '</div><div class="city-map-popup" hidden></div>';
+    map.innerHTML = '<iframe class="fallback-map" title="Mapa de todas as ocorrências" loading="eager" src="' + osmEmbedBounds(south, west, north, east) + '"></iframe><div class="city-map-count">' + points.length + (points.length === 1 ? ' ocorrência no mapa' : ' ocorrências no mapa') + '</div><div class="city-map-markers" aria-label="Pontos de ocorrência">' + markers + '</div><div class="city-map-popup" hidden></div>';
     empty.hidden = true;
     map.querySelectorAll('.city-map-marker').forEach(function (marker) { marker.addEventListener('click', function () { var popup = map.querySelector('.city-map-popup'); popup.innerHTML = '<strong>' + marker.dataset.name + '</strong><span>' + marker.dataset.type + '</span><small>' + marker.dataset.status + '</small>'; popup.hidden = false; }); });
   }
@@ -185,8 +186,8 @@
   function csvCell(value) { return '"' + String(value == null ? '' : value).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"'; }
   function safe(value) { var element = document.createElement('div'); element.textContent = value == null ? '' : value; return element.innerHTML; }
   function formatDate(value) { return value ? new Date(value).toLocaleDateString('pt-BR') : 'Data não informada'; }
-  function readRecords() { try { var data = JSON.parse(localStorage.getItem('registros') || '[]'); return Array.isArray(data) ? data : []; } catch (error) { return []; } }
+  function readRecords() { try { var data = JSON.parse(localStorage.getItem('registros') || '[]'); return Array.isArray(data) ? data.filter(function (item) { return item && typeof item === 'object'; }) : []; } catch (error) { return []; } }
   function writeRecords() { localStorage.setItem('registros', JSON.stringify(registros)); }
-  function osmEmbed(latitude, longitude) { return osmEmbedBounds(Number(latitude) - .004, Number(longitude) - .004, Number(latitude) + .004, Number(longitude) + .004, latitude, longitude); }
-  function osmEmbedBounds(south, west, north, east, latitude, longitude) { return 'https://www.openstreetmap.org/export/embed.html?bbox=' + west + '%2C' + south + '%2C' + east + '%2C' + north + '&layer=mapnik&marker=' + latitude + '%2C' + longitude; }
+  function osmEmbed(latitude, longitude) { return 'https://www.openstreetmap.org/export/embed.html?bbox=' + (Number(longitude) - .004) + '%2C' + (Number(latitude) - .004) + '%2C' + (Number(longitude) + .004) + '%2C' + (Number(latitude) + .004) + '&layer=mapnik&marker=' + latitude + '%2C' + longitude; }
+  function osmEmbedBounds(south, west, north, east) { return 'https://www.openstreetmap.org/export/embed.html?bbox=' + west + '%2C' + south + '%2C' + east + '%2C' + north + '&layer=mapnik'; }
 })();

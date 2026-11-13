@@ -261,6 +261,20 @@ main {
 .history-delete:hover { background:var(--orange); color:var(--white); }
 .location-button { display:block; margin-top:9px; padding:8px 11px; border:1px solid var(--green); background:var(--green-light); color:var(--green); font:700 10px var(--font); cursor:pointer; }
 .location-button:hover { background:var(--green); color:var(--white); }
+.location-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.location-actions .location-button { flex:1 1 180px; margin-top:9px; }
+.location-picker { margin-top:14px; padding:12px; background:var(--paper); border:1px solid var(--line); }
+.location-picker-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; color:var(--green); font-size:11px; }
+.location-picker-close { width:28px; height:28px; border:1px solid var(--line); background:var(--white); color:var(--green); font-size:18px; line-height:1; cursor:pointer; }
+.location-picker-close:hover { background:var(--green); color:var(--white); }
+.location-picker-map { position:relative; height:280px; overflow:hidden; border:1px solid var(--line); background:#E5EAED; }
+.location-picker-map iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
+.picker-surface { position:absolute; inset:0; width:100%; height:100%; border:0; background:transparent; cursor:grab; touch-action:none; }
+.picker-surface:active { cursor:grabbing; }
+.picker-center-marker { position:absolute; z-index:2; top:50%; left:50%; width:20px; height:20px; transform:translate(-50%, -50%); border:3px solid var(--white); border-radius:50%; background:var(--orange); box-shadow:0 2px 8px rgba(37,42,39,.4); pointer-events:none; }
+.location-picker-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.location-picker-actions .location-button { margin-top:8px; }
+.location-picker-cancel { margin-top:8px; padding:8px 11px; border:1px solid var(--line); background:var(--white); color:var(--muted); font:700 10px var(--font); cursor:pointer; }
 .field-help { display:block; margin-top:6px; color:var(--muted); font-size:10px; }
 .photo-upload { display:inline-flex; align-items:center; padding:5px 9px; background:var(--orange); color:var(--white); font-size:10px; font-weight:800; cursor:pointer; transition:var(--transition); }
 .field .photo-upload { display:inline-flex; width:max-content; }
@@ -277,7 +291,9 @@ button, .btn-principal, .link-ver, .rodape-link, .btn-secundario, .photo-upload,
 .fallback-map { position:absolute; inset:0; display:block; width:100%; height:100%; min-width:100%; min-height:100%; margin:0; border:0; }
 .city-map-markers { position:absolute; inset:0; z-index:2; pointer-events:none; }
 .city-map-marker { position:absolute; width:16px; height:16px; padding:0; transform:translate(-50%, -50%); border:3px solid var(--white); border-radius:50%; background:var(--orange); box-shadow:0 2px 8px rgba(37,42,39,.35); cursor:pointer; pointer-events:auto; }
+.city-map-marker::after { content:attr(data-number); display:block; color:var(--white); font:800 8px/10px var(--font); text-align:center; }
 .city-map-marker:hover, .city-map-marker:focus-visible { width:20px; height:20px; background:var(--green); }
+.city-map-count { position:absolute; z-index:3; top:12px; left:12px; padding:7px 10px; background:rgba(252,253,253,.94); border:1px solid var(--line); color:var(--green); font-size:10px; font-weight:800; box-shadow:0 4px 14px rgba(37,42,39,.12); }
 .city-map-popup { position:absolute; z-index:3; left:16px; bottom:16px; display:grid; gap:2px; min-width:170px; max-width:calc(100% - 32px); padding:10px 12px; background:rgba(252,253,253,.96); border:1px solid var(--line); box-shadow:0 8px 24px rgba(37,42,39,.16); font-size:11px; }
 .city-map-popup span, .city-map-popup small { color:var(--muted); font-size:10px; }
 .map-fallback-note { padding:8px 12px; color:var(--muted); font-size:10px; }
