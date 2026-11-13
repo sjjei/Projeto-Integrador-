@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#174C3C">
   <title>Administrativo | Minha Nova Londrina</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="style.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script><script src="admin.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><script src="admin.js" defer></script>
 </head>
 <body class="no-bottom-nav admin-page">
   <section class="login-painel" id="login-panel" aria-labelledby="login-title">
@@ -22,7 +22,7 @@
       </form>
     </div>
   </section>
-  <header class="topo"><div class="topo-in"><a href="index.html" class="identidade"><img src="Tigre_e_Brasão_de_Nova_Londrina-removebg-preview (1).png" alt="Brasao de Nova Londrina" style="width:80px"><div class="marca"><strong>Nova Londrina</strong><span>PLATAFORMA CIDADÃ</span></div></a><a class="perfil" href="index.html" aria-label="Voltar ao inicio">↗</a></div></header>
+  <header class="topo"><div class="topo-in"><a href="index.html" class="identidade"><img src="Tigre_e_Brasão_de_Nova_Londrina-removebg-preview (1).png" alt="Brasao de Nova Londrina" style="width:80px"><div class="marca"><strong>Nova Londrina</strong><span>PLATAFORMA CIDADÃ</span></div></a></div></header>
   <main id="admin-content" hidden>
     <section class="page-intro"><div><span class="sobretitulo">04 / GESTAO</span><h1>Painel <em>administrativo.</em></h1><p>Acompanhe as ocorrencias, atualize os status e consulte os locais registrados.</p></div><span class="page-mark">NL / ADM</span></section>
     <section class="admin-summary"><div><span class="sobretitulo">TOTAL</span><strong id="admin-total">0</strong></div><div><span class="sobretitulo">EM ACOMPANHAMENTO</span><strong id="admin-open">0</strong></div><div><span class="sobretitulo">CONCLUIDAS</span><strong id="admin-done">0</strong></div></section>
@@ -38,6 +38,11 @@
     <p class="result-count" id="result-count" aria-live="polite"></p>
     <section id="admin-empty" class="vazio"><div class="vazio-ilustracao">＋</div><div class="vazio-conteudo"><span class="vazio-etiqueta">SEM REGISTROS</span><h3>Nenhuma ocorrencia para acompanhar.</h3><p>Os novos registros feitos pela comunidade aparecerao aqui.</p></div></section>
     <section id="admin-list" class="admin-list" hidden></section>
+    <footer class="rodape">
+      <div class="rodape-principal"><div class="rodape-marca"><div class="logo logo-pequeno">NL</div><div><strong>Minha Nova Londrina</strong><span>Gest&atilde;o orientada pela comunidade.</span></div></div><a class="rodape-link" href="index.html">Voltar ao in&iacute;cio <span>&nearr;</span></a></div>
+      <div class="rodape-informacao"><p>Painel de acompanhamento dos registros locais. Os dados desta demonstra&ccedil;&atilde;o ficam salvos neste navegador.</p></div>
+      <div class="rodape-final"><span>&copy; 2026 &middot; MINHA NOVA LONDRINA</span><span>PAINEL ADMINISTRATIVO</span></div>
+    </footer>
   </main>
   <p class="toast" id="admin-toast" role="status" aria-live="polite"></p>
   <section class="admin-modal" id="edit-modal" hidden aria-labelledby="edit-modal-title" role="dialog" aria-modal="true">

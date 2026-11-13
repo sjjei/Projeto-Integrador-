@@ -10,7 +10,7 @@
     var visual = '';
     if (hasCoordinates(registro)) {
       var point = Number(registro.coordenadas.latitude) + ',' + Number(registro.coordenadas.longitude);
-      visual += '<div class="history-map"><iframe loading="lazy" title="Mapa da ocorrencia" src="' + osmEmbed(registro.coordenadas.latitude, registro.coordenadas.longitude) + '"></iframe><a href="https://www.openstreetmap.org/?mlat=' + registro.coordenadas.latitude + '&mlon=' + registro.coordenadas.longitude + '#map=16/' + point + '" target="_blank" rel="noopener">Abrir mapa ↗</a></div>';
+      visual += '<div class="history-map"><iframe loading="lazy" title="Mapa da ocorrencia" src="' + osmEmbed(registro.coordenadas.latitude, registro.coordenadas.longitude) + '"></iframe><a href="https://www.openstreetmap.org/?mlat=' + registro.coordenadas.latitude + '&mlon=' + registro.coordenadas.longitude + '#map=16/' + point + '" target="_blank" rel="noopener">Abrir mapa</a></div>';
     }
     card.innerHTML = '<div class="history-card-content"><div class="history-card-top"><span class="history-category">' + safe(registro.tipo || 'Outro') + '</span><span class="history-status">' + status + '</span></div><h3>' + safe(registro.nome || 'Sem titulo') + '</h3><p>' + safe(registro.descricao || '') + '</p><div class="history-meta"><span>⌖ ' + safe(registro.local || 'Local nao informado') + '</span><span>' + date(registro.data) + '</span></div><button class="history-delete" data-id="' + registro.id + '" type="button">Excluir ocorrencia</button></div>' + (visual ? '<div class="history-card-visuals">' + visual + '</div>' : '');
     if (registro.foto) {

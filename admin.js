@@ -47,6 +47,7 @@
     loginPanel.classList.add('is-hidden');
     adminContent.hidden = false;
     adminHeader.hidden = false;
+    setTimeout(function () { if (mapInstance) mapInstance.invalidateSize({ pan: false }); renderMap(registros); }, 120);
     setTimeout(function () { loginPanel.remove(); }, 450);
   }
   async function hashText(value) {
@@ -59,7 +60,7 @@
     updateSummary();
     var filtered = getFiltered();
     renderCharts(filtered);
-    renderMap(filtered);
+    renderMap(registros);
     renderList(filtered);
     document.querySelector('#result-count').textContent = filtered.length + (filtered.length === 1 ? ' ocorrência encontrada.' : ' ocorrências encontradas.');
   }
@@ -117,7 +118,7 @@
   }
   function renderMap(source) {
     var mapElement = document.querySelector('#all-map'); var empty = document.querySelector('#map-empty');
-    var points = source.filter(function (r) { return r.coordenadas && isFinite(r.coordenadas.latitude) && isFinite(r.coordenadas.longitude) && insideNovaLondrina(r.coordenadas.latitude, r.coordenadas.longitude); });
+    var points = source.filter(function (r) { return r.coordenadas && isFinite(r.coordenadas.latitude) && isFinite(r.coordenadas.longitude); });
     if (!points.length) { if (mapInstance) { mapInstance.remove(); mapInstance = null; markerLayer = null; } mapElement.innerHTML = ''; empty.hidden = false; return; }
     if (typeof L === 'undefined') {
       var first = points[0].coordenadas;
@@ -126,22 +127,45 @@
       return;
     }
     empty.hidden = true;
-    if (!mapInstance) { mapElement.innerHTML = ''; mapInstance = L.map('all-map', { center: novaLondrinaCenter, zoom: 14, maxBounds: novaLondrinaBounds, maxBoundsViscosity: 1, zoomControl: true, preferCanvas: true, fadeAnimation: false, zoomAnimation: false, markerZoomAnimation: false }); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19, updateWhenIdle: true, keepBuffer: 2 }).addTo(mapInstance); markerLayer = L.layerGroup().addTo(mapInstance); }
+    if (!mapInstance) { mapElement.innerHTML = ''; mapInstance = L.map('all-map', { center: novaLondrinaCenter, zoom: 14, zoomControl: true, preferCanvas: true, fadeAnimation: false, zoomAnimation: false, markerZoomAnimation: false }); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19, updateWhenIdle: true, keepBuffer: 2 }).addTo(mapInstance); markerLayer = L.layerGroup().addTo(mapInstance); }
     else markerLayer.clearLayers();
     var bounds = [];
     points.forEach(function (r) { var point = [Number(r.coordenadas.latitude), Number(r.coordenadas.longitude)]; bounds.push(point); L.circleMarker(point, { radius: 7, color: '#D66B43', weight: 2, fillColor: '#D66B43', fillOpacity: .85 }).addTo(markerLayer).bindPopup('<strong>' + safe(r.nome || 'Ocorrência') + '</strong><br>' + safe(r.tipo || 'Outro') + '<br>' + safe(label(r.status)) + '<br><a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=' + point[0] + '&mlon=' + point[1] + '#map=16/' + point[0] + '/' + point[1] + '">Abrir mapa</a>'); });
     mapInstance.fitBounds(bounds, { padding: [28, 28], maxZoom: 16, animate: false });
   }
+  function renderMap(source) {
+    var mapElement = document.querySelector('#all-map'); var empty = document.querySelector('#map-empty');
+    var points = source.filter(function (r) { return r.coordenadas && isFinite(r.coordenadas.latitude) && isFinite(r.coordenadas.longitude); });
+    if (!points.length) { mapElement.innerHTML = ''; empty.hidden = false; return; }
+    var latitudes = points.map(function (r) { return Number(r.coordenadas.latitude); });
+    var longitudes = points.map(function (r) { return Number(r.coordenadas.longitude); });
+    var south = Math.min.apply(null, latitudes); var north = Math.max.apply(null, latitudes); var west = Math.min.apply(null, longitudes); var east = Math.max.apply(null, longitudes);
+    var latPadding = Math.max((north - south) * .12, .0035); var lonPadding = Math.max((east - west) * .12, .0035);
+    south -= latPadding; north += latPadding; west -= lonPadding; east += lonPadding;
+    var viewportRatio = mapElement.clientWidth && mapElement.clientHeight ? mapElement.clientWidth / mapElement.clientHeight : 2.4;
+    var boundsRatio = (east - west) / (north - south);
+    if (boundsRatio < viewportRatio) { var centerLon = (west + east) / 2; var halfLon = (north - south) * viewportRatio / 2; west = centerLon - halfLon; east = centerLon + halfLon; }
+    else if (boundsRatio > viewportRatio) { var centerLat = (south + north) / 2; var halfLat = (east - west) / viewportRatio / 2; south = centerLat - halfLat; north = centerLat + halfLat; }
+    var first = points[0].coordenadas;
+    var markers = points.map(function (r) {
+      var lat = Number(r.coordenadas.latitude); var lon = Number(r.coordenadas.longitude);
+      var left = Math.max(2, Math.min(98, (lon - west) / (east - west) * 100));
+      var top = Math.max(2, Math.min(98, (north - lat) / (north - south) * 100));
+      return '<button class="city-map-marker" type="button" style="left:' + left + '%;top:' + top + '%" title="' + safe(r.nome || 'Ocorrência') + '" aria-label="Abrir ocorrência ' + safe(r.nome || 'sem título') + '" data-name="' + safe(r.nome || 'Ocorrência') + '" data-type="' + safe(r.tipo || 'Outro') + '" data-status="' + safe(label(r.status)) + '"></button>';
+    }).join('');
+    mapElement.innerHTML = '<iframe class="fallback-map" title="Mapa de todas as ocorrências" loading="eager" src="' + osmEmbedBounds(south, west, north, east, first.latitude, first.longitude) + '"></iframe><div class="city-map-markers" aria-label="Pontos de ocorrência">' + markers + '</div><div class="city-map-popup" hidden></div>';
+    empty.hidden = true;
+    mapElement.querySelectorAll('.city-map-marker').forEach(function (marker) { marker.addEventListener('click', function () { var popup = mapElement.querySelector('.city-map-popup'); popup.innerHTML = '<strong>' + marker.dataset.name + '</strong><span>' + marker.dataset.type + '</span><small>' + marker.dataset.status + '</small>'; popup.hidden = false; }); });
+  }
+  function osmEmbedBounds(south, west, north, east, latitude, longitude) { return 'https://www.openstreetmap.org/export/embed.html?bbox=' + west + '%2C' + south + '%2C' + east + '%2C' + north + '&layer=mapnik&marker=' + latitude + '%2C' + longitude; }
   function insideNovaLondrina(latitude, longitude) { return Number(latitude) >= novaLondrinaBounds[0][0] && Number(latitude) <= novaLondrinaBounds[1][0] && Number(longitude) >= novaLondrinaBounds[0][1] && Number(longitude) <= novaLondrinaBounds[1][1]; }
   function renderList(source) {
     list.innerHTML = ''; document.querySelector('#admin-empty').hidden = source.length > 0; list.hidden = source.length === 0;
     source.slice().reverse().forEach(function (r) {
       var card = document.createElement('article'); card.className = 'admin-card';
-      var map = r.coordenadas ? '<iframe class="map-frame" loading="lazy" title="Mapa da ocorrência" src="https://www.google.com/maps?q=' + encodeURIComponent(r.coordenadas.latitude + ',' + r.coordenadas.longitude) + '&z=16&output=embed"></iframe><a class="map-link" target="_blank" rel="noopener" href="https://www.google.com/maps?q=' + r.coordenadas.latitude + ',' + r.coordenadas.longitude + '">Abrir no Google Maps ↗</a>' : '<div class="map-missing">Localização do dispositivo não informada.</div>';
+      var map = r.coordenadas ? '<iframe class="map-frame" loading="lazy" title="Mapa da ocorrência" src="' + osmEmbed(r.coordenadas.latitude, r.coordenadas.longitude) + '"></iframe><a class="map-link" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=' + r.coordenadas.latitude + '&mlon=' + r.coordenadas.longitude + '#map=16/' + r.coordenadas.latitude + '/' + r.coordenadas.longitude + '">Abrir mapa</a>' : '<div class="map-missing">Localização do dispositivo não informada.</div>';
       card.innerHTML = '<div class="admin-card-content"><div class="history-card-top"><span class="history-category">' + safe(r.tipo || 'Outro') + '</span><span class="history-status status-' + safe(normalizedStatus(r.status)) + '">' + safe(label(r.status)) + '</span></div><h3>' + safe(r.nome || 'Sem título') + '</h3><p>' + safe(r.descricao || '') + '</p><div class="history-meta"><span>⌖ ' + safe(r.local || 'Local não informado') + '</span><span>' + date(r.data) + '</span></div>' + (r.foto ? '<img class="report-photo" src="' + r.foto + '" alt="Foto enviada na ocorrência">' : '') + '<div class="admin-actions"><label class="status-control-label" for="status-' + r.id + '">Atualizar status</label><select class="status-control" id="status-' + r.id + '" data-id="' + r.id + '">' + statusOptions(r.status) + '</select><button class="admin-edit" data-id="' + r.id + '" type="button">Editar</button><button class="admin-delete" data-id="' + r.id + '" type="button">Excluir</button></div></div><div class="admin-map">' + map + '</div>';
       list.appendChild(card);
-      var mapFrame = card.querySelector('.map-frame');
-      if (mapFrame && r.coordenadas) mapFrame.src = osmEmbed(r.coordenadas.latitude, r.coordenadas.longitude);
     });
     list.querySelectorAll('.status-control').forEach(function (control) { control.addEventListener('change', function () { updateStatus(Number(control.dataset.id), control.value); }); });
     list.querySelectorAll('.admin-edit').forEach(function (button) { button.addEventListener('click', function () { edit(Number(button.dataset.id)); }); });
