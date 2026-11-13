@@ -1357,7 +1357,7 @@ button, .btn-principal, .link-ver, .rodape-link, .btn-secundario, .photo-upload,
   .history-card-top, .history-meta { align-items:flex-start; flex-direction:column; gap:7px; }
   .lista li { grid-template-columns:1fr; grid-template-areas:"title" "detail" "status"; gap:8px; padding:18px 16px 18px 20px; }
   .lista .atividade-status { justify-self:start; }
-  .admin-link { font-size:7px; letter-spacing:.35px; }
+  .admin-link { font-size:90px; letter-spacing:.35px; padding:4px 6px; }
   .admin-summary > div { padding-right:10px; }.admin-summary > div + div { padding-left:10px; }
   .admin-summary strong { font-size:28px; }
   .admin-toolbar { margin-top:30px; align-items:flex-start; }
