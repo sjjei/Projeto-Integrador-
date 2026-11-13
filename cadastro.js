@@ -1,3 +1,4 @@
+/* Formulário de registro: validação, geolocalização e persistência local. */
 (function () {
   var form = document.querySelector('#problem-form');
   var description = document.querySelector('#description');
@@ -15,19 +16,19 @@
   });
   document.querySelector('#get-location').addEventListener('click', function () {
     var status = document.querySelector('#location-status');
-    if (!navigator.geolocation) { status.textContent = 'Geolocalizacao indisponivel neste navegador.'; return; }
-    status.textContent = 'Obtendo sua localizacao...';
+    if (!navigator.geolocation) { status.textContent = 'Geolocalização indisponível neste navegador.'; return; }
+    status.textContent = 'Obtendo sua localização...';
     navigator.geolocation.getCurrentPosition(function (position) {
       coordinates = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       locationInput.setCustomValidity('');
       status.textContent = 'Localizacao capturada com sucesso.';
-    }, function () { coordinates = null; status.textContent = 'Nao foi possivel obter a localizacao. Informe o endereco aproximado para continuar.'; }, { enableHighAccuracy: true, timeout: 10000 });
+    }, function () { coordinates = null; status.textContent = 'Não foi possível obter a localização. Informe o endereço aproximado para continuar.'; }, { enableHighAccuracy: true, timeout: 10000 });
   });
   locationInput.addEventListener('input', function () { if (locationInput.value.trim()) locationInput.setCustomValidity(''); });
   description.addEventListener('input', function () { charCount.textContent = description.value.length + '/500'; });
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    if (!coordinates && !locationInput.value.trim()) locationInput.setCustomValidity('Informe a localizacao aproximada ou use sua localizacao.'); else locationInput.setCustomValidity('');
+    if (!coordinates && !locationInput.value.trim()) locationInput.setCustomValidity('Informe a localização aproximada ou use sua localização.'); else locationInput.setCustomValidity('');
     if (!form.reportValidity()) return;
     var registro = Object.fromEntries(new FormData(form).entries());
     registro.nome = registro.nome.trim(); registro.descricao = registro.descricao.trim(); registro.local = (registro.local || '').trim(); registro.referencia = (registro.referencia || '').trim();

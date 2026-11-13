@@ -1,3 +1,4 @@
+/* Interações e indicadores da página inicial. */
 (function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.hero-slide'));
   if (slides.length) {
@@ -33,9 +34,9 @@
     var detalhe = document.createElement('span');
     var status = document.createElement('small');
     li.className = 'cartao';
-    titulo.textContent = (r && r.nome) || 'Sem titulo';
+    titulo.textContent = (r && r.nome) || 'Sem título';
     detalhe.textContent = [r && r.tipo, r && r.local].filter(Boolean).join(' · ');
-    status.textContent = r && r.status === 'concluido' ? 'CONCLUIDO' : 'EM ACOMPANHAMENTO';
+    status.textContent = r && r.status === 'concluido' ? 'CONCLUÍDA' : 'EM ACOMPANHAMENTO';
     status.className = 'atividade-status';
     li.append(titulo, detalhe, status);
     ul.append(li);
